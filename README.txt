@@ -1,62 +1,87 @@
--------------------------------------------
-Source installation information for modders
--------------------------------------------
-This code follows the Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
-
-Note also that the patches are built against "unrenamed" MCP source code (aka
-srgnames) - this means that you will not be able to read them directly against
-normal code.
-
-Source pack installation information:
-
-Standalone source installation
-==============================
-
-See the Forge Documentation online for more detailed instructions:
-http://mcforge.readthedocs.io/en/latest/gettingstarted/
-
-Step 1: Open your command-line and browse to the folder where you extracted the zip file.
-
-Step 2: Once you have a command window up in the folder that the downloaded material was placed, type:
-
-Windows: "gradlew setupDecompWorkspace"
-Linux/Mac OS: "./gradlew setupDecompWorkspace"
-
-Step 3: After all that finished, you're left with a choice.
-For eclipse, run "gradlew eclipse" (./gradlew eclipse if you are on Mac/Linux)
-
-If you prefer to use IntelliJ, steps are a little different.
-1. Open IDEA, and import project.
-2. Select your build.gradle file and have it import.
-3. Once it's finished you must close IntelliJ and run the following command:
-
-"gradlew genIntellijRuns" (./gradlew genIntellijRuns if you are on Mac/Linux)
-
-Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/ (if you use IDEA, it should automatically start on your project)
-
-If at any point you are missing libraries in your IDE, or you've run into problems you can run "gradlew --refresh-dependencies" to refresh the local cache. "gradlew clean" to reset everything {this does not affect your code} and then start the processs again.
-
-Should it still not work, 
-Refer to #ForgeGradle on EsperNet for more information about the gradle environment.
-
-Tip:
-If you do not care about seeing Minecraft's source code you can replace "setupDecompWorkspace" with one of the following:
-"setupDevWorkspace": Will patch, deobfuscate, and gather required assets to run minecraft, but will not generate human readable source code.
-"setupCIWorkspace": Same as Dev but will not download any assets. This is useful in build servers as it is the fastest because it does the least work.
-
-Tip:
-When using Decomp workspace, the Minecraft source code is NOT added to your workspace in a editable way. Minecraft is treated like a normal Library. Sources are there for documentation and research purposes and usually can be accessed under the 'referenced libraries' section of your IDE.
-
-Forge source installation
-=========================
-MinecraftForge ships with this code and installs it as part of the forge
-installation process, no further action is required on your part.
-
-LexManos' Install Video
-=======================
-https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be
-
-For more details update more often refer to the Forge Forums:
-http://www.minecraftforge.net/forum/index.php/topic,14048.0.html
+<p><img src="https://i.imgur.com/nW5DT3L.png" alt="" width="656" height="311" /></p>
+<blockquote>
+<p style="text-align: left;"><span style="font-size: 18px;"><strong>Quick Facts</strong></span></p>
+<div class="spoiler">
+<p>Built using Forge (1.12.2: 14.23.5.2768 , 1.13.2: 25.0.44)</p>
+<p>For Client and Server</p>
+<p>Adds 2 new Blocks (Dung Block, Pile of Dung)</p>
+<p>Adds 3 new Items (Dung Block, Pile of Dung, Dung)</p>
+<p>TL;DR: Animals poop now, you can use it as fertilizer if you want, or you can throw it. It can accumulate into full sized blocks.</p>
+</div>
+</blockquote>
+<p>&nbsp;</p>
+<p>This simple mod makes animals defecate on solid blocks they're standing on. Now.. why on earth would you want animals to poop all over your world? Simple: Fertilizer. Each animal has a chance to defecate each tick, with pigs having nearly twice the chance as any other animal, and chickens and parrots barely pooping at all. Don't worry! Other than the pig, most animals only do their business about once a day or longer, and the dung piles disintegrate over time, with rain tripling this speed.</p>
+<p>&nbsp;</p>
+<p>The pile of dung will continue to grow if animals keep pooping on that tile, until it forms a solid block after 8 times. This DOES mean that if you don't clean your fenced animal pens out, animals could escape! Dung piles will also slowly decay over time, so only the most crammed of animal pens should have massive dung accumulation. You can break the dung pile at any time to retrieve a dung item for each layer. Each Dung item acts as bonemeal, and can also be thrown, for memes.&nbsp;</p>
+<p>&nbsp;</p>
+<p>Enjoy!</p>
+<p>&nbsp;</p>
+<p>Comments, Suggestions? Leave em below!</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 18px;"><strong>1.13.x Changelog:</strong>&nbsp;</span></p>
+<div class="spoiler">
+<p><strong>1.1.0.2</strong></p>
+<div class="spoiler">
+<ul>
+<li>Updated to latest forge version: 1.13.2-25.0.44</li>
+<li>Fixed up the mod info page a bit</li>
+</ul>
+</div>
+<p><strong>1.1.0.1</strong></p>
+<div class="spoiler">
+<p>Adds Chinese language support.&nbsp;Thanks Hai_Dong!</p>
+</div>
+<p><strong>1.1.0.0</strong></p>
+<div class="spoiler">
+<p>Migrated from 1.12 to 1.13!</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-size: 18px;"><strong>1.12.x Changelog:</strong></span></p>
+<div class="spoiler">
+<p><strong>1.2.1</strong></p>
+<div class="spoiler">
+<p>Adds Chinese language support. Thanks Hai_Dong!</p>
+</div>
+<p><strong>1.2.0</strong></p>
+<ul>
+<li>
+<div class="spoiler">
+<ul>
+<li>Moved "Dung Layer" item from Misc to Decoration tab</li>
+<li>Added config.</li>
+<li>Added "Players Poop Too" config option</li>
+<li>Added "Global Poop Rate Modifier" config option</li>
+<li>Added "Global Poop Despawn Rate Modifier" config option</li>
+<li>Added "Poop Causes Nausea" config option</li>
+<li>Improved compatibility with animal mods</li>
+</ul>
+</div>
+</li>
+</ul>
+<p><strong>1.1.0</strong></p>
+<div class="spoiler">
+<ul>
+<li>Adds Nausea effect on hit with thrown dung.</li>
+</ul>
+</div>
+<p><strong>1.0.1</strong></p>
+<div class="spoiler">
+<ul>
+<li>Massively increased dung despawn speed</li>
+<li>Fixed bug with breaking dung not giving any dung</li>
+<li>Added some dung related recipes</li>
+</ul>
+</div>
+</div>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p><span style="font-size: 18px;"><strong>Check out some of my other mods!</strong></span></p>
+<p>&nbsp;</p>
+<p><a href="https://minecraft.curseforge.com/projects/just-a-few-more-ores"><img src="https://static.planetminecraft.com/files/resource_media/screenshot/1901/just-a-few-more-ores-mod-for-minecraft-logo-750x450-1546651826.jpg" alt="jafm" width="459" height="275" /></a></p>
+<p>This mod adds just a few more ores, to make your mining experience so much better! You can find it here: <a href="https://minecraft.curseforge.com/projects/just-a-few-more-ores">Just a Few More Ores</a></p>
+<p>&nbsp;</p>
+<p><a href="https://minecraft.curseforge.com/projects/living-enchantment"><img src="https://i.imgur.com/1adSWUX.png" alt="" width="457" height="181" /></a></p>
+<p>This mod adds living weapons and enchantments through the use of a new Enchantment, Living! You can find it here: <a href="https://minecraft.curseforge.com/projects/living-enchantment">Living Enchantment</a></p>
