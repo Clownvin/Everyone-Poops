@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "normal": [
+            { "model": "everyonepoops:poop_block" },
+            { "model": "everyonepoops:poop_block", "y": 90 },
+            { "model": "everyonepoops:poop_block", "y": 180 },
+            { "model": "everyonepoops:poop_block", "y": 270 }
+            ]
+    }
+}

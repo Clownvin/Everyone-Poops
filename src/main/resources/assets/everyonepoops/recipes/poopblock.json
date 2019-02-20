@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ppp",
+    "ppp",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "type": "forge:ore_dict",
+      "ore": "poop"
+    }
+  },
+  "result": {
+    "item": "everyonepoops:poop_block",
+    "data": 0
+  }
+}

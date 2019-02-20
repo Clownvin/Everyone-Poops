@@ -1,0 +1,16 @@
+[
+{
+  "modid": "everyonepoops",
+  "name": "Everyone Poops",
+  "description": "A small mod that makes animals poop every now and then, which can then be used as fertilizer.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://minecraft.curseforge.com/projects/everyone-poops-dung-fertilizer",
+  "updateUrl": "",
+  "authorList": ["Clownvin"],
+  "credits": "Clownvin, hai_dong",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

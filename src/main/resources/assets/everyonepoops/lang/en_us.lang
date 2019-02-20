@@ -1,0 +1,5 @@
+#Items
+item.poop.name=Dung
+#Blocks
+tile.poop_layer.name=Dung Pile
+tile.poop_block.name=Block of Dung
