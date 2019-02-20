@@ -1,0 +1,7 @@
+{
+  //Items
+  "item.everyonepoops.poop": "粪",
+  //Blocks
+  "block.everyonepoops.poop_layer": "粪堆",
+  "block.everyonepoops.poop_block": "粪块"
+}

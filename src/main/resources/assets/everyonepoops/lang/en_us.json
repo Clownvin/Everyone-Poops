@@ -1,0 +1,7 @@
+{
+  //Items
+  "item.everyonepoops.poop": "Dung",
+  //#Blocks
+  "block.everyonepoops.poop_layer": "Dung Pile",
+  "block.everyonepoops.poop_block": "Block of Dung"
+}

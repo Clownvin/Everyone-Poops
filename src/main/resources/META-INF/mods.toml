@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[24,]"
+issueTrackerURL="https://github.com/Clownvin/Everyone-Poops/issues"
+displayURL="https://minecraft.curseforge.com/projects/everyone-poops-dung-fertilizer"
+logoFile="logo.png"
+
+[[mods]]
+    modId="everyonepoops"
+    version="${file.jarVersion}"
+    displayName="Everyone Poops"
+    authors="Clownvin"
+    credits="Clownvin, hai_dong"
+    description='''
+    A small mod that makes animals poop every now and then, which can then be used as fertilizer or thrown.
+    '''

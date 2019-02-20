@@ -1,0 +1,10 @@
+{
+    "parent": "block/grass_block",
+    "textures": {
+        "particle": "everyonepoops:blocks/poop_bottom",
+        "bottom": "everyonepoops:blocks/poop_bottom",
+        "top": "everyonepoops:blocks/poop_top",
+        "side": "everyonepoops:blocks/poop_side",
+        "overlay": "everyonepoops:blocks/poop_side_overlay"
+    }
+}
