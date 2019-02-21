@@ -34,6 +34,8 @@ public class PoopConfig {
 
     public static ForgeConfigSpec.IntValue nauseaDuration;
 
+    public static ForgeConfigSpec.BooleanValue showNewUpdateNotifications;
+
     public PoopConfig(ForgeConfigSpec.Builder builder) {
         builder.push("General");
         playersPoop = builder.comment("Whether or not players poop too.")
@@ -51,6 +53,10 @@ public class PoopConfig {
         nauseaDuration = builder.comment("How long nausea from dung lasts, in ticks.")
                 .translation("text.config.nausea_duration")
                 .defineInRange("nausea_duration", 300, 0, 1000000);
+        showNewUpdateNotifications = builder
+                .comment("Changes whether or not the mod will alert you ingame to new updates for your version.")
+                .translation("text.config.show_new_update_notifications")
+                .define("show_new_update_notifications", true);
     }
 
 

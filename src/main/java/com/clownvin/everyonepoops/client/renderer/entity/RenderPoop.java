@@ -23,11 +23,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RenderPoop extends Render<EntityPoop> {
     private static final ResourceLocation texture = new ResourceLocation(EveryonePoops.MODID, "textures/items/poop.png");
 
-    @SubscribeEvent
+    //@OnlyIn(Dist.CLIENT)
+    //@SubscribeEvent
     public static void registerRender(FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(EntityPoop.class, (manager) -> new RenderPoop(manager, Minecraft.getInstance().getItemRenderer()));
     }

@@ -3,5 +3,6 @@
   "item.everyonepoops.poop": "粪",
   //Blocks
   "block.everyonepoops.poop_layer": "粪堆",
-  "block.everyonepoops.poop_block": "粪块"
+  "block.everyonepoops.poop_block": "粪块",
+  "text.new_update_notification": "可以使用新的更新 {0}"
 }

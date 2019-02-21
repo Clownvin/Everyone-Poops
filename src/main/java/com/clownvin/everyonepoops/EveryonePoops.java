@@ -2,6 +2,7 @@ package com.clownvin.everyonepoops;
 
 import com.clownvin.everyonepoops.blocks.BlockPoopLayer;
 import com.clownvin.everyonepoops.blocks.BlockPoopBlock;
+import com.clownvin.everyonepoops.client.renderer.entity.RenderPoop;
 import com.clownvin.everyonepoops.config.PoopConfig;
 import com.clownvin.everyonepoops.entity.projectile.EntityPoop;
 import com.clownvin.everyonepoops.items.ItemPoop;
@@ -16,11 +17,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forgespi.language.IModInfo;
 
 @Mod(EveryonePoops.MODID)
 @Mod.EventBusSubscriber(modid = EveryonePoops.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -39,6 +47,7 @@ public class EveryonePoops {
     }
 
     private void init() {
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> (() -> FMLJavaModLoadingContext.get().getModEventBus().addListener(RenderPoop::registerRender)));
         PoopConfig.init();
         BLOCK_POOP_BLOCK = new BlockPoopBlock();
         BLOCK_POOP_LAYER = new BlockPoopLayer();
@@ -63,6 +72,18 @@ public class EveryonePoops {
         public static void registerItems(RegistryEvent.Register<Item> event) {
             event.getRegistry().registerAll(ITEM_POOP, ITEM_POOP_BLOCK, ITEM_POOP_LAYER);
         }
+    }
+
+    @SubscribeEvent
+    public static void onJoinGame(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+        if (!PoopConfig.showNewUpdateNotifications.get())
+            return;
+        IModInfo info = ModList.get().getModContainerById(MODID).get().getModInfo();
+        VersionChecker.CheckResult result = VersionChecker.getResult(info);
+        if (result.target == null || result.target.getCanonical().compareTo(info.getVersion().getQualifier()) <= 0) {
+            return;
+        }
+        event.getPlayer().sendMessage(new TextComponentTranslation("text.new_update_notification", "everyonepoops-"+result.target.getCanonical()));
     }
 
     public static int getPoopRate(EntityLivingBase animal) {

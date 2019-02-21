@@ -3,5 +3,7 @@
   "item.everyonepoops.poop": "Dung",
   //#Blocks
   "block.everyonepoops.poop_layer": "Dung Pile",
-  "block.everyonepoops.poop_block": "Block of Dung"
+  "block.everyonepoops.poop_block": "Block of Dung",
+  //Text
+  "text.new_update_notification": "A new update is available for {0}."
 }

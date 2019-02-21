@@ -8,6 +8,7 @@ logoFile="logo.png"
     modId="everyonepoops"
     version="${file.jarVersion}"
     displayName="Everyone Poops"
+    updateJSONURL="https://raw.githubusercontent.com/Clownvin/Everyone-Poops/1.13.2/update.json"
     authors="Clownvin"
     credits="Clownvin, hai_dong"
     description='''
