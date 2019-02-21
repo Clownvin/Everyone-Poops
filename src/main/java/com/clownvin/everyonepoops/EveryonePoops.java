@@ -20,11 +20,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -36,7 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(name = EveryonePoops.NAME, modid = EveryonePoops.MODID, version = EveryonePoops.VERSION)
+@Mod(name = EveryonePoops.NAME, modid = EveryonePoops.MODID, version = EveryonePoops.VERSION, updateJSON = "https://raw.githubusercontent.com/Clownvin/Everyone-Poops/1.12.2/update.json")
 @Mod.EventBusSubscriber(modid = EveryonePoops.MODID)
 public class EveryonePoops {
     public static final String MODID = "everyonepoops";
@@ -86,6 +89,34 @@ public class EveryonePoops {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(ITEM_POOP, ITEM_POOP_BLOCK, ITEM_POOP_LAYER);
+    }
+
+    private static boolean isNewerVersion(String v1, String v2) {
+        String[] v1s = v1.split("\\.");
+        String[] v2s = v2.split("\\.");
+        if (v2s.length > v1s.length)
+            return true;
+        System.out.println(v2s.length+", "+v1s.length);
+        for (int i = 0; i < v2s.length; i++) {
+            if (v2s[i].length() > v1s[i].length()) {
+                return true;
+            }
+            if (v2s[i].compareTo(v1s[i]) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @SubscribeEvent
+    public static void onJoinGame(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+        if (!PoopConfig.showUpdateNotifications)
+            return;
+        ForgeVersion.CheckResult result = ForgeVersion.getResult(Loader.instance().activeModContainer());
+        if (result.target == null || !isNewerVersion(Loader.instance().activeModContainer().getVersion(), result.target.toString())) {//result.target.compareTo(Loader.instance().activeModContainer().getVersion()) <= 0) {
+            return;
+        }
+        event.player.sendMessage(new TextComponentTranslation("text.new_update_notification", MODID+", "+MODID+"-"+result.target.toString()));
     }
 
     public static int getPoopRate(EntityLivingBase animal) {

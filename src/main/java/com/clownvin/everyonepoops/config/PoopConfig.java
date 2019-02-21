@@ -33,4 +33,7 @@ public class PoopConfig {
     @Config.Name("Poop Causes Nausea")
     @Config.Comment("Changes whether or not getting hit with thrown dung causes nausea.")
     public static boolean poopCausesNausea = true;
+    @Config.Name("Show Ingame Update Notifications")
+    @Config.Comment("Changes whether or not the mod will alert you ingame to new updates for your version.")
+    public static boolean showUpdateNotifications = true;
 }
