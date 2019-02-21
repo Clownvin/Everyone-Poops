@@ -66,7 +66,6 @@ public class EveryonePoops {
         ITEM_POOP = new ItemPoop();
         ITEM_POOP_BLOCK = new ItemBlock(BLOCK_POOP_BLOCK).setCreativeTab(CreativeTabs.MATERIALS).setUnlocalizedName("poop_block").setRegistryName(MODID, "poop_block");
         ITEM_POOP_LAYER = new ItemBlock(BLOCK_POOP_LAYER).setCreativeTab(CreativeTabs.DECORATIONS).setUnlocalizedName("poop_layer").setRegistryName(MODID, "poop_layer");
-        OreDictionary.registerOre("poop", ITEM_POOP);
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "poop"), EntityPoop.class, "poop", 0, instance, 100, 1, true);
         proxy.preInit(event);
     }
