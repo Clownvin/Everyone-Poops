@@ -1,0 +1,7 @@
+#Items
+item.poop.name=粪
+#Blocks
+tile.poop_layer.name=粪堆
+tile.poop_block.name=粪块
+#Text
+text.new_update_notification=可以使用新的更新 %s
