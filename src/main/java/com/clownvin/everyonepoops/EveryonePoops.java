@@ -25,10 +25,13 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.forgespi.language.IModInfo;
+import net.minecraftforge.versions.forge.ForgeVersion;
 
 @Mod(EveryonePoops.MODID)
 @Mod.EventBusSubscriber(modid = EveryonePoops.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -74,16 +77,33 @@ public class EveryonePoops {
         }
     }
 
+    private static boolean isNewerVersion(String v1, String v2) {
+        String[] v1s = v1.split("\\.");
+        String[] v2s = v2.split("\\.");
+        if (v2s.length > v1s.length)
+            return true;
+        System.out.println(v2s.length+", "+v1s.length);
+        for (int i = 0; i < v2s.length; i++) {
+            if (v2s[i].length() > v1s[i].length()) {
+                return true;
+            }
+            if (v2s[i].compareTo(v1s[i]) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @SubscribeEvent
     public static void onJoinGame(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
         if (!PoopConfig.showNewUpdateNotifications.get())
             return;
         IModInfo info = ModList.get().getModContainerById(MODID).get().getModInfo();
         VersionChecker.CheckResult result = VersionChecker.getResult(info);
-        if (result.target == null || result.target.getCanonical().compareTo(info.getVersion().getQualifier()) <= 0) {
+        if (result.target == null || !isNewerVersion(info.getVersion().getQualifier(), result.target.getCanonical())) {//result.target.compareTo(Loader.instance().activeModContainer().getVersion()) <= 0) {
             return;
         }
-        event.getPlayer().sendMessage(new TextComponentTranslation("text.new_update_notification", "everyonepoops-"+result.target.getCanonical()));
+        event.getPlayer().sendMessage(new TextComponentTranslation("text.new_update_notification", MODID+", "+MODID+"-"+result.target.toString()));
     }
 
     public static int getPoopRate(EntityLivingBase animal) {
