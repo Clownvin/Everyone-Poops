@@ -8,6 +8,7 @@ import com.clownvin.everyonepoops.entity.projectile.EntityPoop;
 import com.clownvin.everyonepoops.items.ItemPoop;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.passive.*;
@@ -20,18 +21,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.forgespi.language.IModInfo;
-import net.minecraftforge.versions.forge.ForgeVersion;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(EveryonePoops.MODID)
 @Mod.EventBusSubscriber(modid = EveryonePoops.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -45,12 +46,17 @@ public class EveryonePoops {
     public static Item ITEM_POOP_BLOCK;
     public static Item ITEM_POOP_LAYER;
 
+    public static final Logger LOGGER = LogManager.getLogger("Everyone Poops");
+
     public EveryonePoops() {
         init();
     }
 
     private void init() {
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> (() -> FMLJavaModLoadingContext.get().getModEventBus().addListener(RenderPoop::registerRender)));
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> (() -> {
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(RenderPoop::registerRender);
+            MinecraftForge.EVENT_BUS.addListener(this::onJoinGame);
+        }));
         PoopConfig.init();
         BLOCK_POOP_BLOCK = new BlockPoopBlock();
         BLOCK_POOP_LAYER = new BlockPoopLayer();
@@ -58,10 +64,6 @@ public class EveryonePoops {
         ITEM_POOP_BLOCK = new ItemBlock(BLOCK_POOP_BLOCK, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(MODID, "poop_block");
         ITEM_POOP_LAYER = new ItemBlock(BLOCK_POOP_LAYER, new Item.Properties().group(ItemGroup.DECORATIONS)).setRegistryName(MODID, "poop_layer");
         EntityPoop.init();
-        //OreDictionary.registerOre("poop", ITEM_POOP);
-        //TODO this
-        //EntityRegistry.registerModEntity(new ResourceLocation(MODID, "poop"), EntityPoop.class, "poop", 0, instance, 100, 1, true);
-        //proxy.preInit(event);
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -77,12 +79,16 @@ public class EveryonePoops {
         }
     }
 
-    private static boolean isNewerVersion(String v1, String v2) {
+    private boolean isNewerVersion(String v1, String v2) {
+        if (v1 == null || v2 == null) {
+            LOGGER.warn("Can't compare versions: local: "+v1+", remote: "+v2);
+            return false;
+        }
         String[] v1s = v1.split("\\.");
         String[] v2s = v2.split("\\.");
         if (v2s.length > v1s.length)
             return true;
-        System.out.println(v2s.length+", "+v1s.length);
+        //(v2s.length+", "+v1s.length);
         for (int i = 0; i < v2s.length; i++) {
             if (v2s[i].length() > v1s[i].length()) {
                 return true;
@@ -94,16 +100,20 @@ public class EveryonePoops {
         return false;
     }
 
-    @SubscribeEvent
-    public static void onJoinGame(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+    public void onJoinGame(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
         if (!PoopConfig.showNewUpdateNotifications.get())
             return;
+        LOGGER.info("Checking for update on join...");
         IModInfo info = ModList.get().getModContainerById(MODID).get().getModInfo();
         VersionChecker.CheckResult result = VersionChecker.getResult(info);
-        if (result.target == null || !isNewerVersion(info.getVersion().getQualifier(), result.target.getCanonical())) {//result.target.compareTo(Loader.instance().activeModContainer().getVersion()) <= 0) {
+        if (result.target == null)
+            return;
+        LOGGER.info("Comparing versions "+info.getVersion().toString()+" and "+result.target.toString());
+        if (!isNewerVersion(info.getVersion().toString(), result.target.toString())) {//result.target.compareTo(Loader.instance().activeModContainer().getVersion()) <= 0) {
             return;
         }
-        event.getPlayer().sendMessage(new TextComponentTranslation("text.new_update_notification", MODID+", "+MODID+"-"+result.target.toString()));
+        LOGGER.info("Update available for Everyone Poops");
+        event.getPlayer().sendMessage(new TextComponentTranslation("text.new_update_notification", "Everyone Poops, version "+result.target.toString()));
     }
 
     public static int getPoopRate(EntityLivingBase animal) {

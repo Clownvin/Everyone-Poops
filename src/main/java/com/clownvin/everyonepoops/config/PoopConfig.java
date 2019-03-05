@@ -36,6 +36,8 @@ public class PoopConfig {
 
     public static ForgeConfigSpec.BooleanValue showNewUpdateNotifications;
 
+    public static ForgeConfigSpec.DoubleValue poopDamage;
+
     public PoopConfig(ForgeConfigSpec.Builder builder) {
         builder.push("General");
         playersPoop = builder.comment("Whether or not players poop too.")
@@ -57,6 +59,9 @@ public class PoopConfig {
                 .comment("Changes whether or not the mod will alert you ingame to new updates for your version.")
                 .translation("text.config.show_new_update_notifications")
                 .define("show_new_update_notifications", true);
+        poopDamage = builder.comment("How much damage does poop cause on hit")
+                .translation("text.config.poop_damage")
+                .defineInRange("poop_damage", 0.5D, 0.0D, 1000.0D);
     }
 
 

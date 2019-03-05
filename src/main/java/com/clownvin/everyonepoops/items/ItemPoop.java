@@ -78,7 +78,7 @@ public class ItemPoop extends Item {
         {
             EntityPoop entityPoop = new EntityPoop(worldIn, playerIn);
             entityPoop.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-            worldIn.spawnEntity(entityPoop);
+            playerIn.getEntityWorld().spawnEntity(entityPoop);
         }
 
         //playerIn.addStat(StatList.getObjectUseStats(this));

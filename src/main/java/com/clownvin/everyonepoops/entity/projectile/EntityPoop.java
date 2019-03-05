@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Particles;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ItemParticleData;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -50,7 +51,7 @@ public class EntityPoop extends EntityThrowable {
     public void handleStatusUpdate(byte p_70103_1_) {
         if (p_70103_1_ == 3) {
             for(int lvt_2_1_ = 0; lvt_2_1_ < 8; ++lvt_2_1_) {
-                this.world.spawnParticle((IParticleData) Particles.FALLING_DUST, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+                this.world.spawnParticle(new ItemParticleData(Particles.ITEM, EveryonePoops.ITEM_POOP.getDefaultInstance()), this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
             }
         }
 
@@ -60,7 +61,7 @@ public class EntityPoop extends EntityThrowable {
     {
         if (result.entity == null)
             return;
-        result.entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.0f);
+        result.entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), PoopConfig.poopDamage.get().floatValue());
         if (this.world.isRemote || !PoopConfig.poopCausesNausea.get()) {
             return;
         }
