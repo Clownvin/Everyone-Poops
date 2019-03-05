@@ -53,7 +53,7 @@ public class EntityPoop extends EntityThrowable {
     {
         if (result.entityHit == null)
             return;
-        result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.0f);
+        result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), PoopConfig.poopDamage);
         if (this.world.isRemote || !PoopConfig.poopCausesNausea) {
             return;
         }

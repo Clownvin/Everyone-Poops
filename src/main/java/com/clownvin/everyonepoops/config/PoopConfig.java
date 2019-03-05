@@ -36,4 +36,8 @@ public class PoopConfig {
     @Config.Name("Show Ingame Update Notifications")
     @Config.Comment("Changes whether or not the mod will alert you ingame to new updates for your version.")
     public static boolean showUpdateNotifications = true;
+    @Config.Name("Poop Damage")
+    @Config.Comment("How much damage getting hit with poop causes")
+    @Config.RangeDouble(min = 0, max = 1000)
+    public static float poopDamage = 0.5f;
 }
